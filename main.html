@@ -1,16 +1,79 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-	<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            display: flex;
+            justify-content: center;
+            
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+
+            /* justify-content: center; */
+        }
+        input{
+            /* width: 30%; */
+            padding: 15px 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+            
+        }
+        #container{
+            width: 20%;
+            border: 2px solid #ccc;
+            background-color: black;
+
+        }
+        #btncon{
+            /* width: 30%; */
+        }
+        button{
+            width: 50px;
+            height: 50px;
+            margin: 7px;
+            border-radius: 8px;
+            cursor: pointer;
+            /* padding: 8px; */
+        }
+
+    </style>
 </head>
-
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+    <div id="container">
+        <div>
+            <input type="text" id="input">
+        </div>
+       <div id="btncon">
+        
+        <button id="block0">1</button>
+        <button id="block1">2</button>
+        <button id="block2">3</button>
+        <button id="block3">4</button>
+        <button id="block4">5</button>
+        <button id="block5">6</button>
+        <button id="block6">7</button>
+        <button id="block7">8</button>
+        <button id="block8">9</button>
+        <button id="block9">0</button>
+        <button id="dot">.</button>
+        <button id="plus">+</button>
+        <button id="minus">-</button>
+        <button id="multiply">*</button>
+        <button id="divide">/</button>
+        <button id="ans">=</button>
+        <button id="clr">C</button>
+        </div>
 
+
+    </div>
+    <script src="cal.js"></script>
 </body>
-
 </html>
