@@ -18,9 +18,19 @@ const appendNumber = (number) => {
 // Append operator to the input
 const appendOperator = (operator) => {
     if (currentInput === '' || currentInput === "Error" || currentInput === "Infinity" || currentInput === "NaN") {
-        return; // Prevent invalid input
+        // Allow operator to be added if no input yet
+        if (operator !== '-') { // Allow only the negative sign as the first operator
+            return; // Prevent other operators at the start
+        }
+        currentInput += operator; // Start with negative sign if clicked first
+    } else {
+        // Prevent consecutive operators (e.g., ++ or --)
+        const lastChar = currentInput[currentInput.length - 1];
+        if (['+', '-', '*', '/'].includes(lastChar)) {
+            return; // Do not allow repeated operators
+        }
+        currentInput += operator;
     }
-    currentInput += operator;
     updateDisplay(currentInput);
 };
 
