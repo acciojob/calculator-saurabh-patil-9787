@@ -36,10 +36,14 @@ const appendOperator = (operator) => {
 
 // Append decimal to the input
 const appendDecimal = () => {
+    // Prevent multiple decimals in the same number
+    const lastChar = currentInput[currentInput.length - 1];
+    const isNumberOrClosingBracket = /[0-9]|\)$/.test(lastChar); // Check if last character is number or closing bracket
+
     if (currentInput === '' || currentInput === "Error" || currentInput === "Infinity" || currentInput === "NaN") {
         currentInput = '0.'; // Start with decimal
-    } else if (!currentInput.includes('.')) {
-        currentInput += '.';
+    } else if (isNumberOrClosingBracket) {
+        currentInput += '.'; // Allow decimal only after a number or closing bracket
     }
     updateDisplay(currentInput);
 };
