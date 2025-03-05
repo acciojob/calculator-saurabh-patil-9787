@@ -34,9 +34,37 @@ const appendDecimal = () => {
     updateDisplay(currentInput);
 };
 
+// Append open bracket '(' to the input
+const appendOpenBracket = () => {
+    currentInput += '(';
+    updateDisplay(currentInput);
+};
+
+// Append close bracket ')' to the input
+const appendCloseBracket = () => {
+    // Check if the last character is an operator or an open bracket
+    if (currentInput === '' || currentInput === "Error" || currentInput === "Infinity" || currentInput === "NaN") {
+        return; // Prevent invalid input
+    }
+    currentInput += ')';
+    updateDisplay(currentInput);
+};
+
+// Delete the last character from the input
+const deleteLastCharacter = () => {
+    if (currentInput !== '') {
+        currentInput = currentInput.slice(0, -1); // Remove the last character
+    }
+    if (currentInput === '') {
+        currentInput = '0'; // If empty, set display to 0
+    }
+    updateDisplay(currentInput);
+};
+
 // Calculate the result
 const calculate = () => {
     try {
+        // Check for edge cases like division by zero or invalid input
         let result = eval(currentInput);
 
         // Handle division by zero and invalid results
