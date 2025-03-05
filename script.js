@@ -1,48 +1,53 @@
 const display = document.getElementById('input');
 const buttons = document.querySelectorAll('button');
-const specialChar = ["+", "-", "/", "*"];
-let output = '';
+let currentInput = '';
 
-// Helper function to handle calculations and edge cases
-const calculate = (btnvalue) => {
-    if (btnvalue === "=" && output !== "") {
-        try {
-            // Prevent evaluation if output has consecutive operators or invalid input
-            if (output.includes("++") || output.includes("--") || output.includes("**") || output.includes("//")) {
-                output = "Error";
-            } else if (output.includes("/0") || output === "0/0") {
-                output = "Infinity"; // Handle division by zero
-            } else {
-                // Safely evaluate the expression
-                output = eval(output).toString();
-
-                // Handle NaN cases
-                if (output === 'NaN') {
-                    output = 'NaN';
-                }
-            }
-        } catch (error) {
-            output = "Error"; // Handle any errors in eval
-        }
-    } else if (btnvalue === "C") {
-        output = ""; // Clear the display when 'C' is clicked
-    } else {
-        // Prevent starting an expression with an operator
-        if (output === "" && specialChar.includes(btnvalue)) return;
-
-        // Prevent multiple decimals in a number
-        if (btnvalue === '.' && output.includes('.')) return;
-
-        output += btnvalue; // Append the button's value to the expression
-    }
-
-    // Update the input field with the output
-    display.value = output;
+// Function to update the display
+const updateDisplay = (value) => {
+    display.value = value;
 };
 
-// Add event listeners to each button
-buttons.forEach((button) => {
+// Function to handle calculations
+const calculate = () => {
+    try {
+        let result = eval(currentInput);
+        
+        // Handling division by zero and invalid operations
+        if (result === Infinity || result === -Infinity) {
+            result = "Infinity";
+        }
+        if (isNaN(result)) {
+            result = "NaN";
+        }
+
+        // Display the result
+        currentInput = result.toString();
+        updateDisplay(currentInput);
+    } catch (error) {
+        currentInput = "Error";
+        updateDisplay(currentInput);
+    }
+};
+
+// Handle button clicks
+buttons.forEach(button => {
     button.addEventListener('click', (event) => {
-        calculate(event.target.innerText);
+        const buttonText = event.target.innerText;
+
+        if (buttonText === "C") {
+            // Clear button logic
+            currentInput = '';
+            updateDisplay('0');
+        } else if (buttonText === "=") {
+            // Equals button logic
+            calculate();
+        } else {
+            // Handle all other buttons
+            if (currentInput === '0' || currentInput === "Error" || currentInput === "Infinity" || currentInput === "NaN") {
+                currentInput = ''; // Clear invalid or previous result
+            }
+            currentInput += buttonText;
+            updateDisplay(currentInput);
+        }
     });
 });
