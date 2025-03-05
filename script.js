@@ -1,18 +1,45 @@
-const display = document.getElementById('input');
-const buttons = document.querySelectorAll('button');
 let currentInput = '';
 
 // Function to update the display
 const updateDisplay = (value) => {
+    const display = document.getElementById('input');
     display.value = value;
 };
 
-// Function to handle calculations
+// Append numbers to the input
+const appendNumber = (number) => {
+    if (currentInput === '0' || currentInput === "Error" || currentInput === "Infinity" || currentInput === "NaN") {
+        currentInput = ''; // Clear invalid or previous result
+    }
+    currentInput += number;
+    updateDisplay(currentInput);
+};
+
+// Append operator to the input
+const appendOperator = (operator) => {
+    if (currentInput === '' || currentInput === "Error" || currentInput === "Infinity" || currentInput === "NaN") {
+        return; // Prevent invalid input
+    }
+    currentInput += operator;
+    updateDisplay(currentInput);
+};
+
+// Append decimal to the input
+const appendDecimal = () => {
+    if (currentInput === '' || currentInput === "Error" || currentInput === "Infinity" || currentInput === "NaN") {
+        currentInput = '0.'; // Start with decimal
+    } else if (!currentInput.includes('.')) {
+        currentInput += '.';
+    }
+    updateDisplay(currentInput);
+};
+
+// Calculate the result
 const calculate = () => {
     try {
         let result = eval(currentInput);
-        
-        // Handling division by zero and invalid operations
+
+        // Handle division by zero and invalid results
         if (result === Infinity || result === -Infinity) {
             result = "Infinity";
         }
@@ -29,25 +56,8 @@ const calculate = () => {
     }
 };
 
-// Handle button clicks
-buttons.forEach(button => {
-    button.addEventListener('click', (event) => {
-        const buttonText = event.target.innerText;
-
-        if (buttonText === "C") {
-            // Clear button logic
-            currentInput = '';
-            updateDisplay('0');
-        } else if (buttonText === "=") {
-            // Equals button logic
-            calculate();
-        } else {
-            // Handle all other buttons
-            if (currentInput === '0' || currentInput === "Error" || currentInput === "Infinity" || currentInput === "NaN") {
-                currentInput = ''; // Clear invalid or previous result
-            }
-            currentInput += buttonText;
-            updateDisplay(currentInput);
-        }
-    });
-});
+// Clear the display
+const clearDisplay = () => {
+    currentInput = '';
+    updateDisplay('0');
+};
